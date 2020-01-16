@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Student's profile</title>
+	<head>
+	<style type="text/css">
+		/* use only RGBA for colours no hex symbol */
+		body{
+			width: 900px;
+			margin: 40px 20px;
+			padding: 60px;
+			font-size: 16px;
+			line-height: 24px;
+			font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
+			color: rgb(33,33,33);
+			justify-items: center;
+		}
+		.grid {
+			display: grid;
+		}
+		.grid-2 {
+			grid-template-columns: 1fr 1fr;
+		}
+		.grid-3 {
+			grid-template-columns: 1fr 1fr 1fr;
+		}
+		.grid-4 {
+			grid-template-columns: 1fr 1fr 1fr 1fr;
+		}
+		
+	</style>
+	<meta charset="utf-8">
+</head>
+<body class="grid">
+	<div class="header grid grid-3">
+		<img src="{{logo}}" class="logo">
+		<h3>{{title}}</h3>
+		<p>{{date}}</p>
+	</div>
+	<div class="body">
+		<div class="info">
+			<p>Student: {{name}}</p>
+		</div>
+		<div class="obs">
+			<p>Obs:</p>
+		</div>
+	</div>
+	<div class="footer">
+		A generic Company - All Rights reserved.
+	</div>
+</body>
+</html>
