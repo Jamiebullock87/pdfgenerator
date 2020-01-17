@@ -29,6 +29,7 @@ app.all('/export/html', (req, res) => {
     }
     res.render('template.html', templateData)
 })
+
 app.all('/export/pdf', cors(),(req, res) => {
     // console.log(req.body.title);
     (async () => {
