@@ -13,6 +13,7 @@
 function handlePDF() {
     var req = new XMLHttpRequest();
     var url = 'http://localhost:3000/export/pdf';
+    // Input the variables here to pass through to the pdf generator
     body = {
         title: 'My Fancy Title',
         date: '10/11/1987',
@@ -28,22 +29,12 @@ function handlePDF() {
     req.onload = function (e) {
         if (req.readyState === 4) {
             if (req.status === 200) {
-                console.log(req);
-                console.log(req.response);
-                // var disposition = req.getResponseHeader('content-disposition');
-                // var matches = /"([^"]*)"/.exec(disposition);
-                // var filename = (matches != null && matches[1] ? matches[1] : 'invoice.pdf');
-
-                // The actual download
                 var blob = new Blob([req.response], { type: 'application/pdf' });
                 var link = document.createElement('a');
                 link.href = window.URL.createObjectURL(blob);
                 link.download = 'invoice.pdf';
-
                 document.body.appendChild(link);
-
                 link.click();
-
                 document.body.removeChild(link);
             } else {
                 console.error(req.statusText);

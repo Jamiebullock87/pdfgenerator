@@ -1,5 +1,8 @@
 const express = require('express');
-const mustacheExpress = require('mustache-express');
+// const mustacheExpress = require('mustache-express');
+const fs = require('fs');
+const path = require('path');
+const handlebars = require('handlebars');
 const puppeteer = require('puppeteer');
 const bodyParser = require('body-parser');
 const app = express();
@@ -7,43 +10,48 @@ var cors = require('cors');
 
 // Use cors middleware, accept requests from any place
 app.use(cors());
+
+// Bodyparser to handle json string, and transform it back to an object
 app.use(express.json());
 app.unsubscribe(bodyParser.json());
 
-/*
-APP FLOW -
-get body from POST request from front end at /export/pdf
-render HTML page with handlebars, using data from the body, sent as js object
-*/
-
-app.engine('html', mustacheExpress())
 app.set('view engine', 'html')
 
-app.all('/export/html', (req, res) => {
-    console.log(req);
-    const templateData = {
-        title: req.query.title,
-        date: req.query.date,
-        name: req.query.name,
-        logo: req.query.logo
-    }
-    res.render('template.html', templateData)
-})
-
 app.all('/export/pdf', cors(),(req, res) => {
-    // console.log(req.body.title);
     (async () => {
+        // Builds the variable object, this needs extending for each bit of dynamic data we want to output
+        const templateData = {
+            title: req.body.title,
+            date: req.body.date,
+            name: req.body.name,
+            logo: req.body.logo
+        }
+        // run it through handlebars - the template is at /views/template.html
+        var templateHtml = fs.readFileSync(path.join(process.cwd(), '/views/template.html'), 'utf8');
+        var template = handlebars.compile(templateHtml);
+        var finalHtml = template(templateData);
+        // formatting options for handlebars document
+        var options = {
+            format: 'A4',
+            headerTemplate: "<p></p>",
+            footerTemplate: "<p></p>",
+            displayHeaderFooter: false,
+            margin: {
+                top: "40px",
+                bottom: "100px"
+            },
+            printBackground: true, // shows background images if they're there
+            path: 'invoice.pdf' // output filename
+        }
+        // run it through puppeteer to make the html into a pdf
         const browser = await puppeteer.launch()
         const page = await browser.newPage()
-        await page.goto('http://localhost:3000/export/html')
-        const buffer = await page.pdf({
-            format: 'A4',
-        })
-        res.type('application/pdf')
-        res.set('Content-Disposition: attachment; filename="invoice.pdf"');
-        // console.log('request', req.body);
+        await page.goto(`data:text/html,${finalHtml}`, {
+            waitUntil: 'networkidle0'
+        });
+        const buffer = await page.pdf(options)
+        await browser.close()
         res.send(buffer)
-        browser.close()
     })()
 })
 
