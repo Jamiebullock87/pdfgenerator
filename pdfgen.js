@@ -7,9 +7,7 @@ var cors = require('cors');
 
 // Use cors middleware, accept requests from any place
 app.use(cors());
-app.use(bodyParser.urlencoded({
-    extended: true
-}));
+app.use(express.json());
 app.unsubscribe(bodyParser.json());
 
 /*
@@ -20,19 +18,19 @@ render HTML page with handlebars, using data from the body, sent as js object
 
 app.engine('html', mustacheExpress())
 app.set('view engine', 'html')
-app.get('/export/html', (req, res) => {
-    console.log(JSON.stringify(req.body));
+
+app.all('/export/html', (req, res) => {
+    console.log(req);
     const templateData = {
         title: req.query.title,
         date: req.query.date,
         name: req.query.name,
         logo: req.query.logo
     }
-
     res.render('template.html', templateData)
 })
-app.get('/export/pdf', cors(),(req, res) => {
-    console.log(JSON.stringify(req.body));
+app.all('/export/pdf', cors(),(req, res) => {
+    // console.log(req.body.title);
     (async () => {
         const browser = await puppeteer.launch()
         const page = await browser.newPage()
@@ -42,7 +40,7 @@ app.get('/export/pdf', cors(),(req, res) => {
         })
         res.type('application/pdf')
         res.set('Content-Disposition: attachment; filename="invoice.pdf"');
-        console.log('request', req.body);
+        // console.log('request', req.body);
         res.send(buffer)
         browser.close()
     })()
