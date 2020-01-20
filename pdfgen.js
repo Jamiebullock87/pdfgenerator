@@ -21,12 +21,23 @@ app.all('/export/pdf', cors(),(req, res) => {
     (async () => {
         // Builds the variable object, this needs extending for each bit of dynamic data we want to output
         const templateData = {
-            title: req.body.title,
+            invoiceNo: req.body.invoiceNo,
+            // If we pass in the company details, we cou
+            logo: req.body.logo,
             date: req.body.date,
-            name: req.body.name,
-            logo: req.body.logo
+            orderNo: req.body.orderNo,
+            orderDate: req.body.orderDate,
+            orderStatus: req.body.orderStatus,
+            shipType: req.body.shipType,
+            paymentMethod: req.body.paymentMethod,
+            specialNote: req.body.specialNote,
+            total: req.body.total,
+            orderItems: req.body.orderItems, // expects arr of objects with ref desc qty unitPrice itemTotal
         }
         // run it through handlebars - the template is at /views/template.html
+        // Could potentially make this take a variable and use different templates eg..
+        // if(req.body.docType === 'invoice') { ... /views/invoice.html}
+        // if(req.body.docType === 'deliveryNote') { ... /views/deliveryNote.html}
         var templateHtml = fs.readFileSync(path.join(process.cwd(), '/views/template.html'), 'utf8');
         var template = handlebars.compile(templateHtml);
         var finalHtml = template(templateData);

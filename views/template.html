@@ -17,36 +17,69 @@
 		}
 		.grid {
 			display: grid;
+			border: 1px solid rgba(150, 150, 150);
 		}
 		.grid-2 {
-			grid-template-columns: 1fr 1fr;
+			grid-template-columns: repeat(2, 1fr);
 		}
 		.grid-3 {
-			grid-template-columns: 1fr 1fr 1fr;
+			grid-template-columns: repeat(3, 1fr);
 		}
 		.grid-4 {
-			grid-template-columns: 1fr 1fr 1fr 1fr;
+			grid-template-columns: repeat(4, 1fr);
+		}
+		.grid-5 {
+			grid-template-columns: repeat(5, 1fr);
 		}
 		
 	</style>
 	<meta charset="utf-8">
 </head>
 <body class="grid">
-	<div class="header grid grid-3">
-		<img src="{{logo}}" class="logo">
-		<h3>{{title}}</h3>
-		<p>{{date}}</p>
+	<div class="grid grid-2">
+		<div>
+			<img src="{{logo}}" class="logo">
+		</div>
+		<div>
+			<h3>Invoice Number{{invoiceNo}}</h3>
+			<p>Invoice date {{date}}</p>
+		</div>
 	</div>
-	<div class="body">
-		<div class="info">
-			<p>Student: {{name}}</p>
-		</div>
-		<div class="obs">
-			<p>Obs:</p>
-		</div>
+	<div class="grid grid-2">
+		<h3>Order Number</h3>
+		<h3>{{orderNo}}</h3>
+		<h3>Order Date</h3>
+		<h3>{{orderDate}}</h3>
+		<h3>Order Status</h3>
+		<h3>{{orderStatus}}</h3>
+		<h3>Shipment</h3>
+		<h3>{{shipType}}</h3>
+		<h3>Payment Method</h3>
+		<h3>{{paymentMethod}}</h3>
+		<h3>Special Note</h3>
+		<h3>{{specialNote}}</h3>
+		<h3>Total</h3>
+		<h3>{{total}}</h3>
+	</div>
+	<div class="items grid grid-5">
+		<h4>Ref</h4>
+		<h4>Description</h4>
+		<h4>Quantity</h4>
+		<h4>Price</h4>
+		<h4>Total</h4>
+		{{#orderItems}}
+			<p>{{ref}}</p>
+			<p>{{desc}}</p>
+			<p>{{qty}}</p>
+			<p>{{unitPrice}}</p>
+			<p>{{itemTotal}}</p>
+    	{{/orderItems}}
+	</div>
+	<div class="totals">
+		<h3>Total Price {{total}}</h3>
 	</div>
 	<div class="footer">
-		A generic Company - All Rights reserved.
+		A generic Company Footer - All Rights reserved.
 	</div>
 </body>
 </html>

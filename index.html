@@ -15,15 +15,34 @@ function handlePDF() {
     var url = 'http://localhost:3000/export/pdf';
     // Input the variables here to pass through to the pdf generator
     body = {
-        title: 'My Fancy Title',
-        date: '10/11/1987',
-        name: 'Jamie Bullock',
-        logo: 'https://via.placeholder.com/200x150',
+        invoiceNo: '125533774',
+        logo: 'https://via.placeholder.com/150x200',
+        date: '20/01/2020',
+        // orderNo: <?php echo $orderNumber; ?>
+        orderNo: '123',
+        orderDate: '15/01/2020',
+        orderStatus: 'Pending',
+        shipType: 'Royal Mail Standard',
+        paymentMethod: 'Paypal',
+        specialNote: 'Leave behind the wheelie bin',
+        total: 'TOTAL PRICE',
+        orderItems: [
+            // For example to spit all this out in php
+            // <?php foreach($items as $item) {
+                //{ref: <?php echo $item->ref; ?>, desc: <?php echo $item->desc; ?>... }
+            // }
+            {ref: '123', desc: 'suntan', qty: 1, unitPrice: 20.00, itemTotal: 20.00 * 1},
+            {ref: '34', desc: 'skincare', qty: 3, unitPrice: 14.99, itemTotal: 14.99 * 3},
+            {ref: '66', desc: 'faketan', qty: 3, unitPrice: 43.00, itemTotal: 43.00 * 3},
+            {ref: '42', desc: 'moisturiser', qty: 2, unitPrice: 11.56, itemTotal: 11.56 * 2},
+            {ref: '24', desc: 'accessory', qty: 1, unitPrice: 32.99, itemTotal: 32.99 * 1},
+        ]
     }
+    // convert the above to JSON to send it to server
     body = JSON.stringify(body);
-    console.log(body);
     req.open("POST", url, true);
     req.responseType = 'blob';
+    // didnt need this, as set it up on node side to allow
     // req.setRequestHeader('Access-Control-Allow-Origin', '*');
     req.setRequestHeader('Content-Type', 'application/json');
     req.onload = function (e) {
@@ -44,7 +63,6 @@ function handlePDF() {
     req.onerror = function (e) {
         console.error(req.statusText);
     }
-    console.log(body);
     req.send(body);
 }
 </script>
