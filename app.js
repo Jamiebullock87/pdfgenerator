@@ -33,7 +33,10 @@ const corsOptions = {
     allowedHeaders: 'Content-Type,Origin',
     maxAge: 80000,
 }
-  
+app.head("/simple-cors", cors(corsOptions), (req, res) => {
+    console.info("HEAD /simple-cors");
+    res.sendStatus(204);
+});
 app.use(cors(corsOptions))
 app.options('*', cors(corsOptions))
 
