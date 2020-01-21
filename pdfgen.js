@@ -4,10 +4,10 @@ const path = require('path');
 const handlebars = require('handlebars');
 const puppeteer = require('puppeteer');
 const bodyParser = require('body-parser');
+const cors = require('cors');
 const app = express();
 
 require('dotenv').config()
-var cors = require('cors');
 
 // Use cors middleware, accept requests from any place
 app.use(cors());
@@ -18,14 +18,7 @@ app.unsubscribe(bodyParser.json());
 
 app.set('view engine', 'html')
 
-var options = {
-    setHeaders: function (res, path, stat) {
-      res.set('Access-Control-Allow-Origin', '*');
-    }
-}  
-app.use(express.static('public', options));
-
-app.all('/export/pdf', cors(),(req, res) => {
+app.all('/export/pdf', (req, res) => {
     (async () => {
         // Builds the variable object, this needs extending for each bit of dynamic data we want to output
         const templateData = {
