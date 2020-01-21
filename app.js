@@ -25,8 +25,12 @@ app.unsubscribe(bodyParser.json());
 
 app.set('view engine', 'html')
 
-// app.use(cors());
-app.options('*', cors());
+const corsOptions = {
+    origin: 'http://jamiebullock.io'
+}
+  
+app.use(cors(corsOptions))
+app.options('*', cors(corsOptions))
 
 app.all('/export/pdf', (req, res) => {
     (async () => {
