@@ -16,7 +16,13 @@ require('dotenv').config()
 //     optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
 // }
 // app.use(cors(corsOptions));
-app.options('*', cors())
+var corsOptions = {
+    origin: 'http://jamiebullock.io',
+    allowedHeaders: 'Content-Type,Origin',
+    optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+    preflightContinue: true,
+}
+app.options('*', cors(corsOptions))
 
 // app.use((req, res, next) => {
 //     res.append('Access-Control-Allow-Origin', ['*']);
