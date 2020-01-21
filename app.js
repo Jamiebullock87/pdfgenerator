@@ -26,7 +26,12 @@ app.unsubscribe(bodyParser.json());
 app.set('view engine', 'html')
 
 const corsOptions = {
-    origin: 'http://jamiebullock.io'
+    origin: 'http://jamiebullock.io',
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    preflightContinue: true,
+    optionsSuccessStatus: 204,
+    allowedHeaders: 'Content-Type,Origin',
+    maxAge: 80000,
 }
   
 app.use(cors(corsOptions))
