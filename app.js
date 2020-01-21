@@ -18,12 +18,16 @@ app.unsubscribe(bodyParser.json());
 
 app.set('view engine', 'html')
 
+app.use(function(req, res, next) {
+    res.header('Access-Control-Allow-Origin', 'jamiebullock.io');
+    res.header('Access-Control-Allow-Credentials', true);
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'Origin,X-Requested-With,Content-Type,Accept,content-type,application/json');
+    next();
+});
+
 app.all('/export/pdf', (req, res) => {
     (async () => {
-        res.setHeader('Access-Control-Allow-Origin', 'jamiebullock.io');
-        res.setHeader('Access-Control-Allow-Credentials', true);
-        res.setHeader('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
-        res.setHeader('Access-Control-Allow-Headers', 'Origin,X-Requested-With,Content-Type,Accept,content-type,application/json');
         // Builds the variable object, this needs extending for each bit of dynamic data we want to output
         const templateData = {
             invoiceNo: req.body.invoiceNo,
