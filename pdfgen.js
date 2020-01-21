@@ -1,11 +1,12 @@
 const express = require('express');
-// const mustacheExpress = require('mustache-express');
 const fs = require('fs');
 const path = require('path');
 const handlebars = require('handlebars');
 const puppeteer = require('puppeteer');
 const bodyParser = require('body-parser');
 const app = express();
+
+require('dotenv').config()
 var cors = require('cors');
 
 // Use cors middleware, accept requests from any place
@@ -66,4 +67,4 @@ app.all('/export/pdf', cors(),(req, res) => {
     })()
 })
 
-app.listen(3000,() => {console.log('listening on port 3000')});
+app.listen(process.env.PORT || 3000,() => {console.log('listening on port 3000')});
