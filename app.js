@@ -1,6 +1,6 @@
 const express = require('express');
 const fs = require('fs');
-const http = require('http');
+const https = require('https');
 const path = require('path');
 const handlebars = require('handlebars');
 const puppeteer = require('puppeteer');
@@ -87,7 +87,7 @@ app.post('/export/pdf', cors(corsOptions), (req, res) => {
     })()
 })
 
-const server = http.createServer(app);
-server.listen(process.env.PORT || 3000, err => {
+const server = https.createServer(app);
+server.listen(process.env.PORT || 3000, (err) => {
     console.log(err || `Server listening on port ${process.env.PORT}`);
 });
