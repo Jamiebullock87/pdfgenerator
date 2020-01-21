@@ -22,7 +22,7 @@ var corsOptions = {
     optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
     preflightContinue: true,
 }
-app.options('*', cors(corsOptions))
+// app.options('*', cors(corsOptions))
 
 // app.use((req, res, next) => {
 //     res.append('Access-Control-Allow-Origin', ['*']);
@@ -38,7 +38,7 @@ app.unsubscribe(bodyParser.json());
 
 app.set('view engine', 'html')
 
-app.post('/export/pdf', cors(), (req, res) => {
+app.post('/export/pdf', cors(corsOptions), (req, res) => {
     (async () => {
         // Builds the variable object, this needs extending for each bit of dynamic data we want to output
         const templateData = {
