@@ -34,8 +34,9 @@ app.set('view engine', 'html')
 //     maxAge: 80000,
 // }
 
+// app.use(cors())
+app.options('*', cors());
 app.use(cors())
-app.options('/export/pdf', cors())
 
 app.post('/export/pdf', (req, res) => {
     (async () => {
@@ -95,6 +96,6 @@ app.post('/export/pdf', (req, res) => {
 app.listen(process.env.PORT || 3000, (err) => console.log(`Example app listening on port ${process.env.PORT}!`))
 
 const server = http.createServer(app);
-server.listen(process.env.PORT || 3000, () => {
+server.listen(process.env.PORT, () => {
     console.log(`EXPRESS`, `HTTP server started on port ${process.env.PORT}.`);
 });
