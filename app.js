@@ -19,7 +19,7 @@ require('dotenv').config()
 app.use(function(req, res, next) {
     res.header('Access-Control-Allow-Origin', 'http://jamiebullock.io');
     res.header('Access-Control-Allow-Methods', 'POST');
-    res.header('Access-Control-Allow-Headers', 'Origin,Content-Type,Accept,content-type,application/json');
+    res.header('Access-Control-Allow-Headers', 'Origin,Content-Type,Accept,content-type,application/json,application/pdf');
     next();
 });
 
