@@ -4,13 +4,13 @@ const path = require('path');
 const handlebars = require('handlebars');
 const puppeteer = require('puppeteer');
 const bodyParser = require('body-parser');
-const cors = require('cors');
+// const cors = require('cors');
 const app = express();
 
 require('dotenv').config()
 
 // Use cors middleware, accept requests from any place
-app.use(cors());
+// app.use(cors());
 
 // Bodyparser to handle json string, and transform it back to an object
 app.use(express.json());
