@@ -1,5 +1,6 @@
 const express = require('express');
 const fs = require('fs');
+const http = require('http');
 const path = require('path');
 const handlebars = require('handlebars');
 const puppeteer = require('puppeteer');
@@ -76,4 +77,7 @@ app.all('/export/pdf', (req, res) => {
     })()
 })
 
-app.listen(process.env.PORT || 3000,() => {console.log('listening on port 3000')});
+const server = http.createServer(app);
+server.listen(process.env.PORT || 3000, err => {
+    console.log(err || `Server listening on port ${process.env.PORT}`);
+});
