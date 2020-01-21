@@ -54,7 +54,7 @@ app.post('/export/pdf', cors(corsOptions), (req, res) => {
             specialNote: req.body.specialNote,
             total: req.body.total,
             orderItems: req.body.orderItems, // expects arr of objects with ref desc qty unitPrice itemTotal
-        }
+        };
         // run it through handlebars - the template is at /views/template.html
         // Could potentially make this take a variable and use different templates eg..
         // if(req.body.docType === 'invoice') { ... /views/invoice.html}
@@ -76,14 +76,15 @@ app.post('/export/pdf', cors(corsOptions), (req, res) => {
             path: 'invoice.pdf' // output filename
         }
         // run it through puppeteer to make the html into a pdf
-        const browser = await puppeteer.launch()
-        const page = await browser.newPage()
+        // const browser = await puppeteer.launch();
+        const browser = await puppeteer.launch({args: ['--no-sandbox']});
+        const page = await browser.newPage();
         await page.goto(`data:text/html,${finalHtml}`, {
             waitUntil: 'networkidle0'
         });
-        const buffer = await page.pdf(options)
-        await browser.close()
-        res.send(buffer)
+        const buffer = await page.pdf(options);
+        await browser.close();
+        res.send(buffer);
     })()
 })
 
