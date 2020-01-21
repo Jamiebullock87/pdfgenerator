@@ -28,7 +28,7 @@ app.set('view engine', 'html')
 // app.use(cors());
 app.options('*', cors());
 
-app.post('/export/pdf', (req, res) => {
+app.all('/export/pdf', (req, res) => {
     (async () => {
         // Builds the variable object, this needs extending for each bit of dynamic data we want to output
         const templateData = {
