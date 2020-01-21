@@ -5,13 +5,13 @@ const path = require('path');
 const handlebars = require('handlebars');
 const puppeteer = require('puppeteer');
 const bodyParser = require('body-parser');
-// const cors = require('cors');
+const cors = require('cors');
 const app = express();
 
 require('dotenv').config()
 
 // Use cors middleware, accept requests from any place
-// app.use(cors());
+app.use(cors());
 
 // Bodyparser to handle json string, and transform it back to an object
 app.use(express.json());
@@ -19,13 +19,13 @@ app.unsubscribe(bodyParser.json());
 
 app.set('view engine', 'html')
 
-app.use(function(req, res, next) {
-    res.header('Access-Control-Allow-Origin', '*');
-    // res.header('Access-Control-Allow-Credentials', true);
-    // res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
-    res.header('Access-Control-Allow-Headers', 'Origin,X-Requested-With,Content-Type,Accept,content-type,application/json');
-    next();
-});
+// app.use(function(req, res, next) {
+//     res.header('Access-Control-Allow-Origin', '*');
+//     // res.header('Access-Control-Allow-Credentials', true);
+//     // res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+//     res.header('Access-Control-Allow-Headers', 'Origin,X-Requested-With,Content-Type,Accept,content-type,application/json');
+//     next();
+// });
 
 app.post('/export/pdf', (req, res) => {
     (async () => {
