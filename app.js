@@ -5,7 +5,7 @@ const path = require('path');
 const handlebars = require('handlebars');
 const puppeteer = require('puppeteer');
 const bodyParser = require('body-parser');
-// const cors = require('cors');
+const cors = require('cors');
 const app = express();
 
 require('dotenv').config()
@@ -16,20 +16,20 @@ require('dotenv').config()
 //     optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
 // }
 // app.use(cors());
-// var corsOptions = {
-//     origin: 'http://jamiebullock.io',
-//     allowedHeaders: 'Content-Type,Origin',
-//     optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
-//     preflightContinue: true,
-// }
-// app.options('*', cors(corsOptions))
+var corsOptions = {
+    origin: 'http://jamiebullock.io',
+    allowedHeaders: 'Content-Type,Origin',
+    optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+    preflightContinue: true,
+}
+app.options('*', cors(corsOptions))
 
-app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', ['*']);
-    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-    res.header('Access-Control-Allow-Headers', 'Origin,Content-Type');
-    next();
-});
+// app.use((req, res, next) => {
+//     res.header('Access-Control-Allow-Origin', 'http://jamiebullock.io');
+//     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+//     res.header('Access-Control-Allow-Headers', 'Origin,Content-Type');
+//     next();
+// });
 
 // Bodyparser to handle json string, and transform it back to an object
 app.use(express.json());
