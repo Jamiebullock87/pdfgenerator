@@ -18,9 +18,11 @@ require('dotenv').config()
 // app.use(cors());
 var corsOptions = {
     origin: 'http://jamiebullock.io',
-    allowedHeaders: 'Content-Type,Origin',
+    methods: 'GET,POST,PUT,PATCH,POST,DELETE,OPTIONS',
+    allowedHeaders: 'Content-Type',
     optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
     preflightContinue: true,
+    maxAge: 86400,
 }
 app.options('*', cors(corsOptions))
 
