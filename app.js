@@ -26,7 +26,7 @@ app.unsubscribe(bodyParser.json());
 
 app.set('view engine', 'html')
 
-app.post('/export/pdf', (req, res) => {
+app.post('/export/pdf', cors(corsOptions), (req, res) => {
     (async () => {
         // Builds the variable object, this needs extending for each bit of dynamic data we want to output
         const templateData = {
