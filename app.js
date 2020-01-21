@@ -25,19 +25,19 @@ app.unsubscribe(bodyParser.json());
 
 app.set('view engine', 'html')
 
-const corsOptions = {
-    origin: 'http://jamiebullock.io',
-    methods: 'POST',
-    preflightContinue: true,
-    optionsSuccessStatus: 204,
-    allowedHeaders: 'Content-Type',
-    maxAge: 80000,
-}
+// const corsOptions = {
+//     origin: 'http://jamiebullock.io',
+//     methods: 'POST',
+//     preflightContinue: true,
+//     optionsSuccessStatus: 204,
+//     allowedHeaders: 'Content-Type',
+//     maxAge: 80000,
+// }
 
-app.use(cors(corsOptions))
-app.options('*', cors(corsOptions))
+app.use(cors())
+app.options('/export/pdf', cors())
 
-app.post('/export/pdf', cors(corsOptions), (req, res) => {
+app.post('/export/pdf', (req, res) => {
     (async () => {
         // Builds the variable object, this needs extending for each bit of dynamic data we want to output
         const templateData = {
