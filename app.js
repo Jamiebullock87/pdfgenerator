@@ -5,7 +5,7 @@ const path = require('path');
 const handlebars = require('handlebars');
 const puppeteer = require('puppeteer');
 const bodyParser = require('body-parser');
-// const cors = require('cors');
+const cors = require('cors');
 const app = express();
 
 require('dotenv').config()
@@ -16,12 +16,15 @@ require('dotenv').config()
 //     optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
 // }
 // app.use(cors(corsOptions));
-app.use((req, res, next) => {
-    res.append('Access-Control-Allow-Origin', ['*']);
-    res.append('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-    res.append('Access-Control-Allow-Headers', 'Content-Type');
-    next();
-});
+app.options('*', cors())
+
+// app.use((req, res, next) => {
+//     res.append('Access-Control-Allow-Origin', ['*']);
+//     Access-Control-Expose-Headers
+//     res.append('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+//     res.append('Access-Control-Allow-Headers', 'Content-Type');
+//     next();
+// });
 
 // Bodyparser to handle json string, and transform it back to an object
 app.use(express.json());
@@ -29,7 +32,7 @@ app.unsubscribe(bodyParser.json());
 
 app.set('view engine', 'html')
 
-app.post('/export/pdf', (req, res) => {
+app.post('/export/pdf', cors(), (req, res) => {
     (async () => {
         // Builds the variable object, this needs extending for each bit of dynamic data we want to output
         const templateData = {
