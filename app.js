@@ -72,7 +72,6 @@ app.all('/export/pdf', (req, res) => {
         });
         const buffer = await page.pdf(options)
         await browser.close()
-        res.set('Access-Control-Allow-Origin', '*');
         res.send(buffer)
     })()
 })
