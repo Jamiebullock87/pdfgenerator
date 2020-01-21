@@ -87,7 +87,9 @@ app.post('/export/pdf', (req, res) => {
     })()
 })
 
-const server = https.createServer(app);
-server.listen(process.env.PORT || 3000, (err) => {
-    console.log(err || `Server listening on port ${process.env.PORT}`);
-});
+// const server = https.createServer(app);
+// server.listen(process.env.PORT || 3000, (err) => {
+//     console.log(err || `Server listening on port ${process.env.PORT}`);
+// });
+
+app.listen(process.env.PORT || 3000, (err) => console.log(`Example app listening on port ${process.env.PORT}!`))
