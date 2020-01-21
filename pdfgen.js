@@ -18,15 +18,14 @@ app.unsubscribe(bodyParser.json());
 
 app.set('view engine', 'html')
 
+var options = {
+    setHeaders: function (res, path, stat) {
+      res.set('Access-Control-Allow-Origin', '*');
+    }
+}  
+app.use(express.static('public', options));
+
 app.all('/export/pdf', cors(),(req, res) => {
-    // Website you wish to allow to connect
-  res.setHeader('Access-Control-Allow-Origin', '*');
-
-  // Request methods you wish to allow
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-
-  // Request headers you wish to allow
-  res.setHeader('Access-Control-Allow-Headers', 'Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers,X-Access-Token,XKey,Authorization');
     (async () => {
         // Builds the variable object, this needs extending for each bit of dynamic data we want to output
         const templateData = {
