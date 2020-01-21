@@ -27,7 +27,7 @@ app.use(function(req, res, next) {
     next();
 });
 
-app.all('/export/pdf', (req, res) => {
+app.post('/export/pdf', (req, res) => {
     (async () => {
         // Builds the variable object, this needs extending for each bit of dynamic data we want to output
         const templateData = {
