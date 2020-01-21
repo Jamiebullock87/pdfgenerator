@@ -18,13 +18,14 @@ require('dotenv').config()
 //     preflightContinue: true,
 //     maxAge: 86400,
 // }
-app.use(cors());
 
 // Bodyparser to handle json string, and transform it back to an object
 app.use(express.json());
 app.unsubscribe(bodyParser.json());
 
 app.set('view engine', 'html')
+
+app.use(cors());
 
 app.post('/export/pdf', (req, res) => {
     (async () => {
