@@ -25,7 +25,8 @@ app.unsubscribe(bodyParser.json());
 
 app.set('view engine', 'html')
 
-app.use(cors());
+// app.use(cors());
+app.options('*', cors());
 
 app.post('/export/pdf', (req, res) => {
     (async () => {
