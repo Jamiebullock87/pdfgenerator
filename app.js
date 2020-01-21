@@ -10,15 +10,15 @@ const app = express();
 
 require('dotenv').config()
 
-var corsOptions = {
-    origin: 'http://jamiebullock.io',
-    methods: 'GET,POST,PUT,PATCH,POST,DELETE,OPTIONS',
-    allowedHeaders: 'Content-Type',
-    optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
-    preflightContinue: true,
-    maxAge: 86400,
-}
-app.use(cors(corsOptions))
+// var corsOptions = {
+//     origin: 'http://jamiebullock.io',
+//     methods: 'GET,POST,PUT,PATCH,POST,DELETE,OPTIONS',
+//     allowedHeaders: 'Content-Type',
+//     optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+//     preflightContinue: true,
+//     maxAge: 86400,
+// }
+app.use(cors());
 
 // Bodyparser to handle json string, and transform it back to an object
 app.use(express.json());
@@ -26,7 +26,7 @@ app.unsubscribe(bodyParser.json());
 
 app.set('view engine', 'html')
 
-app.post('/export/pdf', cors(corsOptions), (req, res) => {
+app.post('/export/pdf', (req, res) => {
     (async () => {
         // Builds the variable object, this needs extending for each bit of dynamic data we want to output
         const templateData = {
