@@ -11,7 +11,7 @@ const app = express();
 require('dotenv').config()
 
 // Use cors middleware, accept requests from any place
-app.use(cors());
+// app.use(cors());
 
 // Bodyparser to handle json string, and transform it back to an object
 app.use(express.json());
@@ -27,7 +27,7 @@ app.set('view engine', 'html')
 //     next();
 // });
 
-app.post('/export/pdf', (req, res) => {
+app.post('/export/pdf', cors(), (req, res) => {
     (async () => {
         // Builds the variable object, this needs extending for each bit of dynamic data we want to output
         const templateData = {
