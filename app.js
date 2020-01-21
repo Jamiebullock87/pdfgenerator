@@ -10,12 +10,6 @@ const app = express();
 
 require('dotenv').config()
 
-// Use cors middleware, accept requests from any place
-// var corsOptions = {
-//     origin: 'http://jamiebullock.io',
-//     optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
-// }
-// app.use(cors());
 var corsOptions = {
     origin: 'http://jamiebullock.io',
     methods: 'GET,POST,PUT,PATCH,POST,DELETE,OPTIONS',
@@ -24,14 +18,7 @@ var corsOptions = {
     preflightContinue: true,
     maxAge: 86400,
 }
-app.options('*', cors(corsOptions))
-
-// app.use((req, res, next) => {
-//     res.header('Access-Control-Allow-Origin', 'http://jamiebullock.io');
-//     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-//     res.header('Access-Control-Allow-Headers', 'Origin,Content-Type');
-//     next();
-// });
+app.use(cors(corsOptions))
 
 // Bodyparser to handle json string, and transform it back to an object
 app.use(express.json());
