@@ -4,8 +4,8 @@
   "description": "nodejs based pdf generator",
   "main": "app.js",
   "scripts": {
-    "start": "node pdfgen.js",
-    "server": "nodemon pdfgen.js"
+    "start": "node app.js",
+    "server": "nodemon app.js"
   },
   "author": "tr10",
   "license": "MIT",
