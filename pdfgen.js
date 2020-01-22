@@ -10,7 +10,13 @@ const app = express();
 require('dotenv').config()
 
 // Use cors middleware, accept requests from any place
-app.use(cors());
+var corsOptions = {
+    origin: [
+        'http://jamiebullock.io',
+        'https://www.thatsoskincare.com/',
+    ]
+}
+app.use(cors(corsOptions));
 
 // Bodyparser to handle json string, and transform it back to an object
 app.use(express.json());
