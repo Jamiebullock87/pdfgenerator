@@ -22,7 +22,9 @@ app.use(cors(corsOptions));
 app.use(express.json());
 app.unsubscribe(bodyParser.json());
 
-app.set('view engine', 'html')
+app.set('view engine', 'html');
+
+// A comment
 
 app.all('/export/pdf', (req, res) => {
     (async () => {
