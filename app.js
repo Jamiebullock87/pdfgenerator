@@ -10,31 +10,12 @@ const app = express();
 
 require('dotenv').config()
 
-// var corsOptions = {
-//     origin: 'http://jamiebullock.io',
-//     methods: 'GET,POST,PUT,PATCH,POST,DELETE,OPTIONS',
-//     allowedHeaders: 'Content-Type',
-//     optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
-//     preflightContinue: true,
-//     maxAge: 86400,
-// }
-
 // Bodyparser to handle json string, and transform it back to an object
 app.use(express.json());
 app.unsubscribe(bodyParser.json());
 
 app.set('view engine', 'html')
 
-// const corsOptions = {
-//     origin: 'http://jamiebullock.io',
-//     methods: 'POST',
-//     preflightContinue: true,
-//     optionsSuccessStatus: 204,
-//     allowedHeaders: 'Content-Type',
-//     maxAge: 80000,
-// }
-
-// app.use(cors())
 app.options('*', cors());
 app.use(cors())
 
@@ -43,7 +24,6 @@ app.post('/export/pdf', (req, res) => {
         // Builds the variable object, this needs extending for each bit of dynamic data we want to output
         const templateData = {
             invoiceNo: req.body.invoiceNo,
-            // If we pass in the company details, we cou
             logo: req.body.logo,
             date: req.body.date,
             orderNo: req.body.orderNo,
@@ -76,8 +56,7 @@ app.post('/export/pdf', (req, res) => {
             path: 'invoice.pdf' // output filename
         }
         // run it through puppeteer to make the html into a pdf
-        // const browser = await puppeteer.launch();
-        const browser = await puppeteer.launch({args: ['--no-sandbox']});
+        const browser = await puppeteer.launch({args: ["--no-sandbox", "--disable-setuid-sandbox"]});
         const page = await browser.newPage();
         await page.goto(`data:text/html,${finalHtml}`, {
             waitUntil: 'networkidle0'
@@ -87,13 +66,6 @@ app.post('/export/pdf', (req, res) => {
         res.send(buffer);
     })()
 })
-
-// const server = https.createServer(app);
-// server.listen(process.env.PORT || 3000, (err) => {
-//     console.log(err || `Server listening on port ${process.env.PORT}`);
-// });
-
-// app.listen(process.env.PORT || 3000, (err) => console.log(`Example app listening on port ${process.env.PORT}!`))
 
 const server = http.createServer(app);
 server.listen(process.env.PORT, () => {
