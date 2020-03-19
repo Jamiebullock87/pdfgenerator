@@ -1,0 +1,67 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Node JS PDF Gen Test</title>
+</head>
+<body>
+    <h1>Node PDF Generator</h1>    
+    <button onclick="handlePDF();">Gen PDF</button>
+</body>
+<script>
+function handlePDF() {
+    var req = new XMLHttpRequest();
+    var url = 'https://tr10erator.herokuapp.com/export/pdf';
+    // Input the variables here to pass through to the pdf generator
+    body = {
+        invoiceNo: '125533774',
+        logo: 'https://via.placeholder.com/150x200',
+        date: '20/01/2020',
+        // orderNo: <?php echo $orderNumber; ?>
+        orderNo: '123',
+        orderDate: '15/01/2020',
+        orderStatus: 'Pending',
+        shipType: 'Royal Mail Standard',
+        paymentMethod: 'Paypal',
+        specialNote: 'Leave behind the wheelie bin',
+        total: 'TOTAL PRICE',
+        orderItems: [
+            // For example to spit all this out in php
+            // <?php foreach($items as $item) {
+                //{ref: <?php echo $item->ref; ?>, desc: <?php echo $item->desc; ?>... }
+            // }
+            {ref: '123', desc: 'suntan', qty: 1, unitPrice: 20.00, itemTotal: 20.00 * 1},
+            {ref: '34', desc: 'skincare', qty: 3, unitPrice: 14.99, itemTotal: 14.99 * 3},
+            {ref: '66', desc: 'faketan', qty: 3, unitPrice: 43.00, itemTotal: 43.00 * 3},
+            {ref: '42', desc: 'moisturiser', qty: 2, unitPrice: 11.56, itemTotal: 11.56 * 2},
+            {ref: '24', desc: 'accessory', qty: 1, unitPrice: 32.99, itemTotal: 32.99 * 1},
+        ]
+    }
+    // convert the above to JSON to send it to server
+    body = JSON.stringify(body);
+    req.open("POST", url, true);
+    req.responseType = 'blob';
+    req.setRequestHeader('Content-Type', 'application/json');
+    req.onload = function (e) {
+        if (req.readyState === 4) {
+            if (req.status === 200) {
+                var blob = new Blob([req.response], { type: 'application/pdf' });
+                var link = document.createElement('a');
+                link.href = window.URL.createObjectURL(blob);
+                link.download = 'invoice.pdf';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            } else {
+                console.error(req.statusText);
+            }
+        }
+    };
+    req.onerror = function (e) {
+        console.error(req.statusText);
+    }
+    req.send(body);
+}
+</script>
+</html>
