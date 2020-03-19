@@ -10,7 +10,7 @@ const app = express();
 
 require('dotenv').config()
 
-// Bodyparser to handle json string, and transform it back to an object
+// Bodyparser to handle json string, and transform it back to an object to send to handlebars
 app.use(express.json());
 app.unsubscribe(bodyParser.json());
 
@@ -39,15 +39,23 @@ app.post('/export/pdf', (req, res) => {
         // Could potentially make this take a variable and use different templates eg..
         // if(req.body.docType === 'invoice') { ... /views/invoice.html}
         // if(req.body.docType === 'deliveryNote') { ... /views/deliveryNote.html}
-        var templateHtml = fs.readFileSync(path.join(process.cwd(), '/views/template.html'), 'utf8');
-        var template = handlebars.compile(templateHtml);
-        var finalHtml = template(templateData);
+        const templateHtml = fs.readFileSync(path.join(process.cwd(), '/views/template.html'), 'utf8');
+        const template = handlebars.compile(templateHtml);
+        const finalHtml = template(templateData);
         // formatting options for handlebars document
-        var options = {
+
+        // We can build the header/footer out here over multiple lines if its complicated
+        const header = `
+        <div>
+            <h1>Company Name</h1>
+            <h4>Company Tag Line</h4>
+        </div>
+        `;
+        const options = {
             format: 'A4',
-            headerTemplate: "<p></p>",
-            footerTemplate: "<p></p>",
-            displayHeaderFooter: false,
+            headerTemplate: header, // can create a reusable header?
+            footerTemplate: "<p></p>", // Also a reusable footer
+            displayHeaderFooter: false, // not for now though
             margin: {
                 top: "40px",
                 bottom: "100px"
