@@ -1,5 +1,7 @@
 # My Fancy PDF Generator
-I built this to be an endpoint to enable easy pdf generation for multiple use cases. It was built to run on heroku. You can create as many different layouts as you want in the views folder, and use CSS3, so CSS grid and flexbox will all work here. No more using HTML2 and CSS 2 and building with tables as with most PDF generators out there. I was sick of having to resort to a piece of 10 year old software and using html tables and inline styling to accomplish a basic pdf layout.
+I built this to be an endpoint to enable easy pdf generation for multiple use cases. It was built to run on heroku. You can create as many different layouts as you want in the views folder, and use CSS3, so CSS grid and flexbox will all work here. No more hacky layouts and building with tables as with most PDF generators out there.
+
+Would need some security adding and cors locking down to use in a production environment, but was a fun hobby project.
 
 You can extend the app.js templateData object to accept any kind of data you want to output in your pdf, then create your layout with html5 and css3 in the views folder.
 
